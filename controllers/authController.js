@@ -23,8 +23,7 @@ const signToken =id=>{
           passwordConfirm:req.body.passwordConfirm
   
        });
-       console.log(error);
-       console.log(value);
+        
        if(error){
           res.status(400).json({
               status:'fail',
@@ -41,8 +40,9 @@ const signToken =id=>{
         return;
        }
        const newUser = await User.create(req.body);
-
-       const token =  signToken(newUser._id)
+       
+       const token =  signToken(newUser._id);
+       
        res.status(201).json({
            status:'success',
            token,
