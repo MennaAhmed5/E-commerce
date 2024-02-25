@@ -25,7 +25,7 @@ app.use(express.static('uploads'));
 
 //DB
 mongoose.connect(process.env.DBURL)
-.then(()=>console.log("DB connected successfully..."))
+.then(()=>console.log("Connected to MongoDB..."))
 .catch((err)=>console.log(err));
 
 
