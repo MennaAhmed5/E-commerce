@@ -5,6 +5,8 @@ const app = express();
 const port = process.env.PORT||8000;
 
 const userRouter = require('./routes/userRouter');
+const cartRoute=require('./routes/cartroutes')
+
  
 
 //Middlewars
@@ -12,6 +14,9 @@ app.use(express.json())
 
 //Routes
 app.use("/api/v1/users",userRouter);
+app.use('/api/v1/cart',cartRoute)
+
+
 
 
 
