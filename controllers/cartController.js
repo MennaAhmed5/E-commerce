@@ -1,3 +1,7 @@
+const Cart = require('../models/Cartmodel')
+
+
+
 // const {v4:uuid} = require("uuid");
 // const { validateNewCourse } = require("../validation/course.validator");
 // const { findAllCourses, createCouse } = require("../services/course.service");
@@ -17,7 +21,6 @@
 //   ]
 // }
 
-const Cart = require('../models/Cartmodel')
 //get user Cart
 
 const getCart=async (req , res)=>{
@@ -109,6 +112,26 @@ const addToCart=async (req, res)=> {
     await Cart.findOneAndDelete({ user: req.user._id });
     res.status(204).json({message:"cart deleted"});
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // const updateCartItem=async (req, res) =>{
