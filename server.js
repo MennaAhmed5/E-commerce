@@ -17,9 +17,6 @@ app.use("/api/v1/users",userRouter);
 app.use('/api/v1/cart',cartRoute)
 
 
-
-
-
 //Serve images in directory named images
 app.use(express.static('uploads'));
 
