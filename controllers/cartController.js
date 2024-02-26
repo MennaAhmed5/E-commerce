@@ -1,40 +1,138 @@
+const Cart = require('../models/Cartmodel')
+
+
+
 // const {v4:uuid} = require("uuid");
 // const { validateNewCourse } = require("../validation/course.validator");
 // const { findAllCourses, createCouse } = require("../services/course.service");
+// {
+//   "userId": "61e3f1a3d2f0a4f1e4f1e4f1",
+//   "items": [
+//     {
+//       "productId": "61e3f1a3d2f0a4f1e4f1e4f2",
+//       "quantity": 2,
+//       "price": 10
+//     },
+//     {
+//       "productId": "61e3f1a3d2f0a4f1e4f1e4f3",
+//       "quantity": 1,
+//       "price": 20
+//     }
+//   ]
+// }
 
-const Cart = require('../models/Cartmodel')
+
+//get user Cart
 
 const getCart=async (req , res)=>{
-    const cart=await Cart.find();
-    res.send(cart);
+  const cart = await Cart.findOne({ user: req.user._id });
+  if(!cart){
+    req.json({message:"this user have no carts ........"})
+  }
 
+    res.json({message:"cart retrieved successfully",data:cart});
 }
+
+//add product to cart
 
 const addToCart=async (req, res)=> {
-    const cartItem = req.body;
-    const cart = new Cart(cartItem);
+    const {productId,color} = req.body;
+    const product=  await Product.findById(productId);
+
+    if(!product){
+      return res.json({message:"product not found!"})
+    }
+
+    //get cart for the logged user
+
+    const cart= await Cart.findOne({user:req.user._id});
+
+    if(!cart){
+     cart = await Cart.create({
+      user: req.user._id,
+      cartItems: [{ product: productId, color:color, price: product.price }],
+    });
+    }else{
+      //check if the product is already in the cart=>update quality
+      const  productCartIndex= Cart.cartItem.findIndex((item )=>item.product.toString()===productId&&item.color===color);
+      if (productCartIndex !==-1){
+        const cartitem=cart.cartItems[productCartIndex];
+        cartitem.quantity+=1;
+        cart.cartItems[productCartIndex]=cartitem;
+      }
+      else{
+        //if the product not in the cart u need to push it 
+
+        cart.cartItems.push({product:productId,color,price:product.price})
+      }
+    };
+    //
+    // const cart = new Cart(cartItem);
     await cart.save();
-    res.status(201).send(cartItem.value);
+    res.status(200).json({ message: 'Product added to cart successfully', data: cart });
   }
 
+
+//
   const updateCartItem = async (req, res) => {
+    
+    const {quantity,color} = req.body;
     const productId = req.params.productId;
-    const updatedCartItem = req.body;
-    updatedCartItem.productId = productId; 
-    await Cart.findOneAndUpdate({ 'items.productId': productId }, { $set: { 'items.$': updatedCartItem } });
-    res.send(updatedCartItem);
+   const cart= await Cart.findOne({ user:req.user._id });
+   if(!cart){
+
+    res.json({message:"No cart for this user ........"})
+
+   }
+   const cartIndex=cart.cartItems.findIndex((item)=>item._id.toString()=== productId);
+   if(cartIndex > -1){
+   const currentItem = cart.cartItems[cartIndex];
+   currentItem.quantity=quantity;
+   currentItem.color=color;
+   cart.cartItems[cartIndex]=currentItem;
+   }
+   else{
+    res.json({message:"there is no product matchs that id "})
+   }
+     await cart.save();
+    res.json({message:"updated success",data:cart})
 }
   
+
+/////removeSpecificCartItem
   const removeCartItem = async (req, res) => {
     const productId = req.params.productId;
-    await Cart.findOneAndUpdate({ 'items.productId': productId }, { $pull: { items: { productId: productId } } });
-    res.send({ message: 'Product removed from cart' });
+   const cart = await Cart.findOneAndUpdate({user:req.user._id}, { $pull: { cartItems: {_id:productId } } });// $pull: { cartItems: { _id: req.params.itemId } },
+     await cart.save();
+    res.json({ message: 'Product removed from cart',data:cart});
   }
-  
+
+
+  //clear user cart
   const clearCart = async (req, res) => {
-    await Cart.deleteMany({});
-    res.send({ message: 'Cart cleared' });
+    await Cart.findOneAndDelete({ user: req.user._id });
+    res.status(204).json({message:"cart deleted"});
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // const updateCartItem=async (req, res) =>{
