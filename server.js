@@ -15,6 +15,7 @@ app.use(express.json())
 //Routes
 app.use("/api/v1/users",userRouter);
 app.use('/api/v1/cart',cartRoute)
+app.use('/api/v1/checkout', paymentRoute)
 
 
 //Serve images in directory named images
