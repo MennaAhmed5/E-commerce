@@ -9,12 +9,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.0",
     "multer": "^1.4.5-lts.1",
-<<<<<<< HEAD
     "nodemon": "^3.1.0",
-    "uuid": "^9.0.1",
-=======
     "stripe": "^14.18.0",
->>>>>>> 37e2c0a6011ac176cbf1cf74ef224daf7fc55660
+    "uuid": "^9.0.1",
     "validator": "^13.11.0"
   }
 }
