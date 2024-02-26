@@ -5,7 +5,8 @@ const app = express();
 const port = process.env.PORT||8000;
 
 const userRouter = require('./routes/userRouter');
-const cartRoute=require('./routes/cartroutes')
+const cartRoute = require('./routes/cartroutes')
+const paymentRoute = require('./routes/paymentRouter')
 
  
 
@@ -14,8 +15,11 @@ app.use(express.json())
 
 //Routes
 app.use("/api/v1/users",userRouter);
-app.use('/api/v1/cart',cartRoute)
+app.use('/api/v1/cart', cartRoute)
 app.use('/api/v1/checkout', paymentRoute)
+
+
+
 
 
 //Serve images in directory named images
@@ -23,7 +27,7 @@ app.use(express.static('uploads'));
 
 //DB
 mongoose.connect(process.env.DBURL)
-.then(()=>console.log("Connected to MongoDB..."))
+.then(()=>console.log("DB connected successfully..."))
 .catch((err)=>console.log(err));
 
 
