@@ -47,7 +47,9 @@ const userSchema = new mongoose.Schema({
     },
 
 },{
-    timestamps:true
+    timestamps:true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
 })
 
 //call back function implement before saving 
