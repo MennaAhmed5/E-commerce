@@ -54,6 +54,7 @@ exports.getProfile= async (req,res)=>{
 }
 
 exports.updateProfile = async (req,res)=>{
+  try{
     //return error if user try to update password here
     if(req.body.password || req.body.passwordConfirm){
        res.status(400).json({
@@ -98,6 +99,13 @@ exports.updateProfile = async (req,res)=>{
           data: updatedUser
         }
       });
+
+  }catch(err){
+    res.status(400).json({
+      status: 'fail',
+      message: err
+    });
+  }
 } 
 
 

@@ -8,7 +8,7 @@ exports.newProduct = (product)=>{
         price:joi.string().required(), 
         stock:joi.number().required(), 
         images: joi.array().items(joi.string()),
-        category: joi.objectId (),
+        category: joi.objectId(),
         ratingsAverage:joi.number().min(1).max(5),
         ratingsQuantity:joi.number()
         

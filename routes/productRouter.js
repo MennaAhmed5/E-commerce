@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const authController = require('./../controllers/authController');
 const productController = require('./../controllers/productController');
+const reviewRouter = require('./../routes/reviewRouter');
 
 router.post("/",authController.protect,authController.restrictTo('admin'),productController.uploadProductPhoto,productController.createProduct);
 router.patch("/:id",authController.protect,authController.restrictTo('admin'),productController.uploadProductPhoto,productController.updateProduct);
@@ -11,5 +12,6 @@ router.get("/",productController.getAllProduct);
 
 
 
+router.use('/:id', reviewRouter);
 
 module.exports = router;

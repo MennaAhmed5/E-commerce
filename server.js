@@ -7,7 +7,8 @@ const port = process.env.PORT||8000;
 const userRouter = require('./routes/userRouter');
 const productRouter = require('./routes/productRouter');
 const cartRoute=require('./routes/cartroutes');
-const paymentRoute = require('./routes/paymentRouter')
+const paymentRoute = require('./routes/paymentRouter');
+const adminRouter = require('./routes/adminRouter');
  
  
 
@@ -18,8 +19,10 @@ app.use(express.json());
 //Routes
 app.use("/api/v1/users",userRouter);
 app.use('/api/v1/cart',cartRoute);
-app.use('/api/v1/products',productRouter)
-app.use('/api/v1/checkout', paymentRoute)
+app.use('/api/v1/products',productRouter);
+app.use('/api/v1/checkout', paymentRoute);
+app.use('/api/v1/admin', adminRouter);
+ 
  
 
 

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+ 
 const productSchema = mongoose.Schema(
     {
       name: {
@@ -64,6 +64,11 @@ const productSchema = mongoose.Schema(
   );
   
 
+//   productSchema.virtual('reviews', {
+//     ref: 'Review',
+//     foreignField: 'product',
+//     localField: '_id',
+//   });
 
 const Product = mongoose.model("Product", productSchema);
 module.exports = Product;

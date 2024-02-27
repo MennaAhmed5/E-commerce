@@ -1,5 +1,6 @@
+const Product = require('./productModel');
 const mongoose = require('mongoose');
-const Product = require('./../models/productModel');
+
 
 const reviewSchema = mongoose.Schema(
     {
@@ -10,8 +11,7 @@ const reviewSchema = mongoose.Schema(
       },
       comment: {
         type: String,
-        required: [true, 'Comment can not be empty'],
-      },
+       },
       product: {
         type: mongoose.Schema.ObjectId,
         ref: 'Product',
@@ -30,6 +30,15 @@ const reviewSchema = mongoose.Schema(
     }
   );
 
+
+  // reviewSchema.pre(/^find/, function (next) {
+  //   this.populate({
+  //     //this=>query
+  //     path: 'user',
+  //     select: 'name photo',
+  //   });
+  //   next();
+  // });
 
   reviewSchema.statics.calcAverageRating = async function (productId) {
     const stats = await this.aggregate([
@@ -62,6 +71,8 @@ const reviewSchema = mongoose.Schema(
   reviewSchema.post('save', function () {
     this.constructor.calcAverageRating(this.product);
   });
+
+  
   
 const Review = mongoose.model('Review', reviewSchema);
 module.exports = Review;
