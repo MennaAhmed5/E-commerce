@@ -6,8 +6,9 @@ exports.newProduct = (product)=>{
         name: joi.string().min(3).max(30).required(),
         description: joi.string().required(),
         price:joi.string().required(), 
-        stock:joi.number().required(), 
+        quantity:joi.number(), 
         images: joi.array().items(joi.string()),
+        colors:joi.array().items(joi.string()),
         category: joi.objectId(),
         ratingsAverage:joi.number().min(1).max(5),
         ratingsQuantity:joi.number()
@@ -23,7 +24,8 @@ exports.updateProduct = (product)=>{
         description: joi.string(),
         price:joi.number(),
         images: joi.array().items(joi.string()),
-        stock:joi.number(), 
+        quantity:joi.number(), 
+        colors:joi.array().items(joi.string()),
         category:joi.objectId(),
         ratingsAverage:joi.number().min(1).max(5),
         ratingsQuantity:joi.number()

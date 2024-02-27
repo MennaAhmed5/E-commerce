@@ -14,36 +14,17 @@ const productSchema = mongoose.Schema(
         type: Number,
         required: [true, "product price is required"],
       },
-      stock: {
+      quantity: {
         type: Number,
-        required: [true, "product stock required"],
+        required: [true, "product quantity required"],
       },
       images:[String],
-
+      colors: [String],
       category: {
         type: mongoose.Schema.ObjectId,
        // ref: 'Category',
        // required: [true, 'Product must be belong to category'],
       },
-    //   subcategories: [
-    //     {
-    //       type: mongoose.Schema.ObjectId,
-    //       ref: 'SubCategory',
-    //     },
-    //   ],
-
-     
-      // 
-      // category: {
-      //   type: "mongoose.Schema.Types.ObjectId",
-      //   ref: "Category",
-      // },
-      // images: [
-      //   {
-      //     public_id: String,
-      //     url: String,
-      //   },
-      // ],
       ratingsAverage: {
         type: Number,
         min: [1, 'Rating must be above 1.0'],

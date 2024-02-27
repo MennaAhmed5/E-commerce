@@ -32,12 +32,14 @@ exports.uploadProductPhoto = upload;
 
 
 exports.createProduct= async(req,res)=>{
-    try{        
+    try{    
+      const colorsArray = req.body.colors.split(',').map(color => color.trim());    
      const {error,value} = productValidator.newProduct({
         name: req.body.name,
         description: req.body.description,
         price:req.body.price, 
-        stock:req.body.stock, 
+        quantity:req.body.quantity, 
+        colors: colorsArray,
         category: req.body.category,
         images:req.files.map(file=>file.filename)
      });
@@ -74,13 +76,15 @@ exports.createProduct= async(req,res)=>{
 
 
 exports.updateProduct = async (req,res)=>{
-  
+  const colorsArray = req.body.colors.split(',').map(color => color.trim());    
+
   try{
   const {error,value} = productValidator.updateProduct({
     name: req.body.name,
     description: req.body.description,
     price:req.body.price, 
-    stock:req.body.stock, 
+    quantity:req.body.quantity, 
+    colors: colorsArray,
     category: req.body.category,
     images:req.files.map(file=>file.filename)
   });
