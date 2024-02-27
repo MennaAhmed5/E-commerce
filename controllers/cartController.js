@@ -36,7 +36,7 @@ const getCart=async (req , res)=>{
 //add product to cart
 
 const addToCart=async (req, res)=> {
-    const {productId,color} = req.body;
+    const {productId,color,quantity} = req.body;
     const product=  await Product.findById(productId);
 
     if(!product){
@@ -50,7 +50,7 @@ const addToCart=async (req, res)=> {
     if(!cart){
      cart = await Cart.create({
       user: req.user._id,
-      cartItems: [{ product: productId, color:color, price: product.price }],
+      cartItems: [{ product: productId, color:color,quantity:quantity, price: product.price }],
     });
     }else{
       //check if the product is already in the cart=>update quality
@@ -63,7 +63,7 @@ const addToCart=async (req, res)=> {
       else{
         //if the product not in the cart u need to push it 
 
-        cart.cartItems.push({product:productId,color,price:product.price})
+        cart.cartItems.push({product:productId,color:color,quantity:quantity,price:product.price})
       }
     };
     //
