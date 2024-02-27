@@ -180,7 +180,7 @@ exports.getAllProduct = async (req,res)=>{
   exports.getOneProduct = async (req,res)=>{ 
     try{
       
-      const product= await Product.findById(req.params.id);
+      const product= await Product.findById(req.params.id).populate('reviews');
       if(!product){
         res.status(400).json({
             status:'fail',

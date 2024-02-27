@@ -31,14 +31,14 @@ const reviewSchema = mongoose.Schema(
   );
 
 
-  // reviewSchema.pre(/^find/, function (next) {
-  //   this.populate({
-  //     //this=>query
-  //     path: 'user',
-  //     select: 'name photo',
-  //   });
-  //   next();
-  // });
+  reviewSchema.pre(/^find/, function (next) {
+    this.populate({
+      //this=>query
+      path: 'user',
+      select: 'name photo',
+    });
+    next();
+  });
 
   reviewSchema.statics.calcAverageRating = async function (productId) {
     const stats = await this.aggregate([
