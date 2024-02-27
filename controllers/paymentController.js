@@ -8,18 +8,21 @@ exports.getCheckout = async (req, res, next) => {
         const cart = await Cart.findById(cartId);
 
         if (!cart) {
-            return `Cart Not found`;
+            return ('Cart Not found');
         }
 
-        let cartPrice = cart.items.price;
+        let cartPrice = cart.items.reduce((total, item) => total + item.price, 0);
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [{
-
-                currency: 'egp',
-                name: req.user.name,
-                amount: cartPrice * 100,
+                price_data: {
+                    currency: 'egp',
+                    product_data: {
+                        name: req.user.name,
+                    },
+                    unit_amount: Math.round(cartPrice * 100), 
+                },
                 quantity: 1,
             }],
             mode: 'payment',
@@ -32,3 +35,6 @@ exports.getCheckout = async (req, res, next) => {
         next(error);
     }
 };
+
+
+
