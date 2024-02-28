@@ -1,6 +1,6 @@
 const { string } = require('joi');
 const mongoose = require('mongoose');
- 
+const Category = require('./CategoryModel');
 const productSchema = mongoose.Schema(
     {
       name: {
@@ -25,8 +25,8 @@ const productSchema = mongoose.Schema(
       colors: [String],
       category: {
         type: mongoose.Schema.ObjectId,
-       // ref: 'Category',
-       // required: [true, 'Product must be belong to category'],
+        ref: 'Category',
+        required: [true, 'Product must be belong to category'],
       },
       ratingsAverage: {
         type: Number,
@@ -54,6 +54,6 @@ const productSchema = mongoose.Schema(
     localField: '_id',
   });
 
-const Product = mongoose.model("Product", productSchema);
+const Product = mongoose.model('Product', productSchema);
 module.exports = Product;
   
