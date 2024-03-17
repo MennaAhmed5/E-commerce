@@ -162,7 +162,7 @@ try{
 exports.getAllProduct = async (req,res)=>{ 
     try{
       
-      const allProducts= await Product.find();
+      const allProducts= await Product.find().select('name description price category ratingsQuantity ratingsAverage images');
 
       res.status(200).json({
           status: 'success',
