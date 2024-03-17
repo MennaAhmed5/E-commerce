@@ -10,8 +10,8 @@ const productRouter = require("./routes/productRouter");
 const cartRoute = require("./routes/cartroutes");
 const paymentRoute = require("./routes/paymentRouter");
 const adminRouter = require("./routes/adminRouter");
-const categoryRoute = require("./Routes/categoryRoute");
-const orderRoute = require("./Routes/OrderRoute");
+const categoryRoute = require("./routes/categoryRoute");
+const orderRoute = require("./routes/OrderRoute");
 dotenv.config({ path: "./real.env" });
 //Middlewars
 app.use(express.json());
