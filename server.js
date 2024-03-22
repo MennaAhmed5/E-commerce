@@ -10,12 +10,14 @@ const productRouter = require("./routes/productRouter");
 const cartRoute = require("./routes/cartroutes");
 const paymentRoute = require("./routes/paymentRouter");
 const adminRouter = require("./routes/adminRouter");
+const cors = require('cors');
+
 const categoryRoute = require("./routes/categoryRoute");
 const orderRoute = require("./routes/OrderRoute");
 dotenv.config({ path: "./real.env" });
 //Middlewars
 app.use(express.json());
-
+app.use(cors());
 //Routes
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/cart", cartRoute);
