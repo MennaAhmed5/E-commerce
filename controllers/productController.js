@@ -159,27 +159,64 @@ try{
 } 
 
 
-exports.getAllProduct = async (req,res)=>{ 
-    try{
+// exports.getAllProduct = async (req,res)=>{ 
+//     try{
       
-      const allProducts= await Product.find().select('name description price category ratingsQuantity ratingsAverage images');
+//       const allProducts= await Product.find().select('name description price category ratingsQuantity ratingsAverage images');
+
+//       res.status(200).json({
+//           status: 'success',
+//           results:allProducts.length,
+//           data:{
+//             allProducts
+//           }
+//         });
+    
+//       } catch(err){
+//         res.status(400).json({
+//           status:'fail',
+//           message:err,
+//         })
+//       }
+//   } 
+
+exports.getAllProduct = async (req, res) => {
+  try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = 5; 
+      const sortField = req.query.sortField || 'name'; 
+      const sortOrder = req.query.sortOrder || 'asc'; 
+
+      const startIndex = (page - 1) * limit;
+
+      let query = Product.find().select('name description price category ratingsQuantity ratingsAverage images');
+
+      query = query.sort({ [sortField]: sortOrder });
+
+      query = query.skip(startIndex).limit(limit);
+
+      const allProducts = await query;
+
+      const totalProducts = await Product.countDocuments();
+      const totalPages = Math.ceil(totalProducts / limit); 
 
       res.status(200).json({
           status: 'success',
-          results:allProducts.length,
-          data:{
-            allProducts
+          results: allProducts.length,
+          totalResults: totalProducts,
+          currentPage: page,
+          totalPages: totalPages,
+          data: {
+              allProducts
           }
-        });
-    
-      } catch(err){
-        res.status(400).json({
-          status:'fail',
-          message:err,
-        })
-      }
-  } 
-
+      });
+  } catch (err) {
+      res.status(400).json({
+          status: 'fail',
+          message: err.message
+      });
+  }
+}
 
   exports.getOneProduct = async (req,res)=>{ 
     try{
