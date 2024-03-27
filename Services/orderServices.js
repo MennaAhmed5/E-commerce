@@ -1,5 +1,5 @@
 // services/orderService.js
-const Order = require("../Models/OrderModel");
+const Order = require('../models/OrderModel');
 
 const getAllOrders = async () => {
   return await Order.find().populate("user").populate("cartItems.product");

@@ -163,16 +163,23 @@ const updateCartItem = async (req, res) => {
 /////removeSpecificCartItem
   const removeCartItem = async (req, res) => {
     const productId = req.params.productId;
-   const cart = await Cart.findOneAndUpdate({user:req.user._id}, { $pull: { cartItems: {_id:productId } } });// $pull: { cartItems: { _id: req.params.itemId } },
+  //  const cart = await Cart.findOneAndUpdate({user:req.user._id}, { $pull: { cartItems: {_id:productId } } });// $pull: { cartItems: { _id: req.params.itemId } },
+  const cart = await Cart.findOneAndUpdate(
+    { user: req.user._id },
+    { $pull: { cartItems: { product: productId } } },
+    { new: true } // to return the updated document
+  );
+
      await cart.save();
     res.json({ message: 'Product removed from cart',data:cart});
   }
 
 
+
   //clear user cart
   const clearCart = async (req, res) => {
     await Cart.findOneAndDelete({ user: req.user._id });
-    res.status(204).json({message:"cart deleted"});
+    res.json({message:"cart deleted successfully"});
   }
 
 

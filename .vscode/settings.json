@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/71aba40f-344e-4bd7-a059-43c86f7d6d1d/resourceGroups/learn-a1e44145-8e5a-4ac8-998f-7be0c65626a7/providers/Microsoft.Web/sites/nasseej",
+    "appService.deploySubpath": "."
+}
